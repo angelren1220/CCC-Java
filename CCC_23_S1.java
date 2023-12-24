@@ -50,7 +50,21 @@ public class CCC_23_S1{
 
     // 3. calculate perimeter
     int totalPerimeter = 0;
-    
+    for (int i = 0; i < 2; i++){
+      for (int j = 0; j < C; j++){
+        if(grid[i][j] == 1) { // tile is wet
+          totalPerimeter += calculatePerimeterForTile(grid, i, j, C);
+        }
+      }
+    }
 
+    System.out.println(totalPerimeter);
+
+  }
+
+  private static int calculatePerimeterForTile(int[][] grid, int row, int col, int C){
+    int perimeter = 0;
+
+    return perimeter;
   }
 }
