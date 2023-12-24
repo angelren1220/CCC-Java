@@ -52,7 +52,7 @@ public class CCC_23_S1{
     int totalPerimeter = 0;
     for (int i = 0; i < 2; i++){
       for (int j = 0; j < C; j++){
-        if(grid[i][j] == 1) { // tile is wet
+        if(grid[i][j] == 1) { // tile is wet, it needs the tape
           totalPerimeter += calculatePerimeterForTile(grid, i, j, C);
         }
       }
@@ -62,8 +62,25 @@ public class CCC_23_S1{
 
   }
 
+  /*
+   * Method
+   * check each side of the pile and calculate the perimeter
+   */
   private static int calculatePerimeterForTile(int[][] grid, int row, int col, int C){
     int perimeter = 0;
+
+    // Check left side, the tile is at the leftmost or the left is not wet
+    if(col == 0 || grid[row][col - 1] == 0) perimeter++;
+
+    // Check right side, the tile is at the rightmost or the right is not wet
+    if(col == C-1 || grid[row][col + 1] == 0) perimeter++;
+
+    // check top/bottom side
+    if( row == 0 || row ==1){
+      int adjacentRow = (row == 0) ? 1 : 0;
+      if(col < C - 1 && grid[adjacentRow][col + (row == 0 ? 0 : 1)] == 0) perimeter ++;
+      if(col > 0 && grid[adjacentRow][col - (row == 0 ? 1 : 0)] == 0) perimeter ++;
+    }
 
     return perimeter;
   }
