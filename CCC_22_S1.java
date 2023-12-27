@@ -12,6 +12,22 @@ Your task is to help Finn determine the number of ways that a number can be writ
  * Output the number of unordered sums of fours and fives which form the number N. Output 0 if there are no such sums of fours and fives.
  */
 
+import java.util.Scanner;
+
 public class CCC_22_S1 {
-  
+  public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int solution = 0;
+        
+        while (N >= 0) {
+            if (N % 5 == 0) {
+                solution += 1;
+            }
+            N -= 4;
+        }
+        
+        System.out.println(solution);
+        scanner.close();
+    }
 }
