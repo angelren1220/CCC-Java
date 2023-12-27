@@ -32,56 +32,56 @@
 
 import java.util.Scanner;
 
-public class CCC_23_S1{
-  public static void main(String[] args) {
+public class CCC_23_S1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int C = sc.nextInt(); // Number of columns
+        int[][] grid = new int[2][C]; // Grid for the tiles
 
-    // 1. read the input
-    Scanner sc = new Scanner(System.in);
-    int C = sc.nextInt();
-    int [][] grid = new int[2][C];
-
-    // 2. process the grid
-    for (int i = 0; i < 2; i++){
-      for (int j = 0; j < C; j++){
-        grid[i][j] = sc.nextInt();
-      }
-    }
-    sc.close();
-
-    // 3. calculate perimeter
-    int totalPerimeter = 0;
-    for (int i = 0; i < 2; i++){
-      for (int j = 0; j < C; j++){
-        if(grid[i][j] == 1) { // tile is wet, it needs the tape
-          totalPerimeter += calculatePerimeterForTile(grid, i, j, C);
+        // Reading the grid input
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < C; j++) {
+                grid[i][j] = sc.nextInt();
+            }
         }
-      }
+
+        sc.close();
+
+        System.out.println(calculateTotalPerimeter(grid, C));
     }
 
-    System.out.println(totalPerimeter);
+    private static int calculateTotalPerimeter(int[][] grid, int C) {
+        int perimeter = 0;
 
-  }
+        // Process each tile
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < C; j++) {
+                if (grid[i][j] == 1) { // If the tile is wet
+                    perimeter += calculatePerimeterForTile(grid, i, j, C);
+                }
+            }
+        }
 
-  /*
-   * Method
-   * check each side of the pile and calculate the perimeter
-   */
-  private static int calculatePerimeterForTile(int[][] grid, int row, int col, int C){
-    int perimeter = 0;
-
-    // Check left side, the tile is at the leftmost or the left is not wet
-    if(col == 0 || grid[row][col - 1] == 0) perimeter++;
-
-    // Check right side, the tile is at the rightmost or the right is not wet
-    if(col == C-1 || grid[row][col + 1] == 0) perimeter++;
-
-    // check top/bottom side
-    if( row == 0 || row ==1){
-      int adjacentRow = (row == 0) ? 1 : 0;
-      if(col < C - 1 && grid[adjacentRow][col + (row == 0 ? 0 : 1)] == 0) perimeter ++;
-      if(col > 0 && grid[adjacentRow][col - (row == 0 ? 1 : 0)] == 0) perimeter ++;
+        return perimeter;
     }
 
-    return perimeter;
-  }
+    private static int calculatePerimeterForTile(int[][] grid, int row, int col, int C) {
+        int perimeter = 0;
+
+        // Check all three sides of the triangle
+        // Side 1
+        if (isBoundaryOrDry(grid, row, col - 1, col == 0)) perimeter++;
+        // Side 2
+        if (isBoundaryOrDry(grid, row, col + 1, col == C - 1)) perimeter++;
+        // Side 3
+        if (isBoundaryOrDry(grid, 1 - row, (row == 0) ? col : col + 1, (row == 0) ? col == C - 1 : col == 0)) perimeter++;
+
+        return perimeter;
+    }
+
+    private static boolean isBoundaryOrDry(int[][] grid, int row, int col, boolean isBoundary) {
+        // If it's a boundary or the adjacent tile is dry
+        return isBoundary || grid[row][col] == 0;
+    }
 }
+
