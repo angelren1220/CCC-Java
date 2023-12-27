@@ -16,18 +16,18 @@ import java.util.Scanner;
 
 public class CCC_22_S1 {
   public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int solution = 0;
-        
-        while (N >= 0) {
-            if (N % 5 == 0) {
-                solution += 1;
-            }
-            N -= 4;
-        }
-        
-        System.out.println(solution);
-        scanner.close();
+    Scanner scanner = new Scanner(System.in);
+    int N = scanner.nextInt();
+    int solution = 0;
+
+    while (N >= 0) {
+      if (N % 5 == 0) {
+        solution += 1;
+      }
+      N -= 4;
     }
+
+    System.out.println(solution);
+    scanner.close();
+  }
 }
