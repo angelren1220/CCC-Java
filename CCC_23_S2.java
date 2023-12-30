@@ -20,6 +20,51 @@ The first line consists of an integer N, representing the number of mountains in
 Output on one line N space-separated integers, where the i-th integer from the left is the asymmetric value of the most symmetric picture of crops of length i.
  */
 
+import java.util.Scanner;
+
 public class CCC_23_S2 {
-  
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // Number of mountains
+        int[] heights = new int[N]; // Heights of the mountains
+
+        // Reading mountain heights
+        for (int i = 0; i < N; i++) {
+            heights[i] = sc.nextInt();
+        }
+        sc.close();
+
+        // Array to store the minimum asymmetric value for each segment length
+        int[] minAsymmetry = new int[N];
+
+        // Calculate minimum asymmetric value for each segment length
+        for (int len = 1; len <= N; len++) {
+            minAsymmetry[len - 1] = findMinAsymmetricValue(heights, len);
+        }
+
+        // Output the minimum asymmetric values
+        for (int asymmetry : minAsymmetry) {
+            System.out.print(asymmetry + " ");
+        }
+    }
+
+    private static int findMinAsymmetricValue(int[] heights, int len) {
+        int minAsymmetry = Integer.MAX_VALUE;
+
+        // Try all possible segments of the given length
+        for (int start = 0; start <= heights.length - len; start++) {
+            int asymmetry = 0;
+
+            // Calculate asymmetric value for the current segment
+            for (int i = 0; i < len / 2; i++) {
+                asymmetry += Math.abs(heights[start + i] - heights[start + len - 1 - i]);
+            }
+
+            // Update the minimum asymmetric value
+            minAsymmetry = Math.min(minAsymmetry, asymmetry);
+        }
+
+        return minAsymmetry;
+    }
 }
+
