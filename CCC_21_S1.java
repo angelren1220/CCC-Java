@@ -2,23 +2,37 @@
  * 2021 Senior Problem 1 Crazy Fencing
  */
 
+import java.util.Scanner;
+
 public class CCC_21_S1 {
 
-// 1. Read Input:
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
 
-// Use BufferedReader to read the input.
-// Read the first line to get the number of pieces of wood, N.
-// Read the second line to get the heights of the pieces of wood into an array heights, which will have N+1 elements.
-// Read the third line to get the widths of the pieces of wood into an array widths, which will have N elements.
-// 2. Calculate Area of Each Piece:
+    // 1. read input
+    int N = sc.nextInt();
 
-// Iterate through each piece of wood.
-// Calculate the area of each trapezoid using the formula area = (a + b) / 2 * h, where a and b are the heights of the left and right sides of a piece of wood, and h is the width.
-// 3. Sum Areas:
+    double totalArea = 0;
+    int[] heights = new int[N + 1];
+    int[] widths = new int[N];
 
-// Accumulate the areas of all the pieces to get the total area.
-// 4. Output the Result:
+    for (int i = 0; i <= N; i++) {
+      heights[i] = sc.nextInt();
+    }
 
-// Print out the total area.
+    for (int i = 0; i < N; i++) {
+      widths[i] = sc.nextInt();
+    }
+
+    sc.close();
+
+    // 2. calculate and sum the area
+    for (int i = 0; i < N; i++) {
+      totalArea += ((heights[i] + heights[i + 1]) / 2.0) * widths[i];
+    }
+
+    // 3. output the result
+    System.out.println(totalArea);
+  }
 
 }
