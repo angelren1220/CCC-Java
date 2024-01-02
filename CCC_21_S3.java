@@ -24,13 +24,39 @@ public class CCC_21_S3 {
     System.out.println(minimumWalkingTime(N, P, W, D));
     sc.close();
 
-    // 3. Determine the range of possible positions for c that would allow each friend to hear the concert.
-    // 4. For each possible position c, calculate the total time it would take all friends to reach a point within their hearing range.
-    // 5. Choose the position c that minimizes the total time.
   }
 
   public static long minimumWalkingTime(int N, long[] P, long[] W, long[] D){
-    return 0;
+    long left = 0; // Start of the search range
+    long right = (long)1e9; // End of the search range, assuming positions can be very large
+
+    // binary search to find the optimal concert position
+    while (left < right) {
+        long c = (left + right) / 2; // Midpoint of the current search range
+        // Compare total walking time at position 'c' and 'c+1' to decide which direction to search
+        if (helper(N, P, W, D, c) < helper(N, P, W, D, c + 1)) {
+            right = c;  // If 'c' is better, search the left half
+        } else {
+            left = c + 1; // If 'c+1' is better, search the right half
+        }
+    }
+    // After the loop, 'left' is the optimal concert position
+    return helper(N, P, W, D, left);
+
   }
+
+  // Helper method to calculate the total walking time given a concert position 'c'
+  private static long helper(int N, long[] P, long[] W, long[] D, long c) {
+    // Initialize total walking time
+    long totalWalkingTime = 0;
+
+    // Iterate through each friend
+    for (int i = 0; i < N; i++) {
+        if (Math.abs(P[i] - c) > D[i]) {
+            totalWalkingTime += (Math.abs(P[i] - c) - D[i]) * W[i];
+        }
+    }
+    return totalWalkingTime;
+}
 
 }
