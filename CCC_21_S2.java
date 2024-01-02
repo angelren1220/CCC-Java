@@ -30,13 +30,21 @@ public class CCC_21_S2 {
     scanner.close();
     // 2. count the number of gold cells
     int goldCount = countGoldCells(rows, cols);
-    System.out.println(goldCount);
     // 3. output the result
     System.out.println(goldCount);
   }
 
-  public static int countGoldCells(boolean[] rows, boolean[] cols){
+  public static int countGoldCells(boolean[] rows, boolean[] cols) {
     int goldCount = 0;
+
+    for (int i = 0; i < rows.length; i++) {
+      for (int j = 0; j < cols.length; j++) {
+        // A cell is gold if an odd number of operations have been applied to its row or column
+        if (rows[i] ^ cols[j]) {
+          goldCount++;
+        }
+      }
+    }
     return goldCount;
   }
 }
